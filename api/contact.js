@@ -1,6 +1,3 @@
-// Vercel Serverless Function — Contact Form Handler
-// Deployed automatically at /api/contact
-// Stores messages in-memory per invocation (use a DB for persistence)
 
 export default async function handler(req, res) {
   // CORS headers
@@ -51,14 +48,14 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         sender: {
           name: 'Portfolio Contact Form',
-          email: 'ajjukigf@gmail.com' // MUST be your verified Brevo sender email
+          email: 'ajjukigf@gmail.com'
         },
         replyTo: {
           name: name.trim(),
-          email: email.trim() // The person who filled out the form
+          email: email.trim()
         },
         to: [{
-          email: 'kapishtickoo.dev@gmail.com', // Your email where you want to receive messages
+          email: 'kapishtickoo.dev@gmail.com',
           name: 'Kapish Tickoo'
         }],
         subject: `New Portfolio Message from ${name.trim()}${company ? ` (${company.trim()})` : ''}`,
