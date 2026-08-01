@@ -22,7 +22,8 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
+    <>
+      <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
       <a href="#" className="navbar__logo">KT_</a>
 
       <div className="navbar__links">
@@ -40,11 +41,13 @@ export default function Navbar() {
         </button>
       </div>
 
+      </nav>
+
       <div className={`navbar__mobile-menu ${mobileOpen ? 'navbar__mobile-menu--open' : ''}`}>
         {navLinks.map((link) => (
           <a key={link.href} href={link.href} className="navbar__link" onClick={() => setMobileOpen(false)}>{link.label}</a>
         ))}
       </div>
-    </nav>
+    </>
   );
 }

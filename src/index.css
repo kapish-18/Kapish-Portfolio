@@ -73,6 +73,8 @@ body {
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  width: 100%;
+  position: relative;
 }
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
@@ -85,7 +87,7 @@ input, textarea { font: inherit; color: inherit; }
 ::-webkit-scrollbar-thumb { background: var(--charcoal); border-radius: 3px; }
 
 /* ── 3. Layout ── */
-.wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--px); }
+.wrap { width: 100%; max-width: var(--max-w); margin: 0 auto; padding: 0 var(--px); overflow-x: hidden; }
 
 /* ── 4. Blueprint Background Texture ── */
 .bp-dark {
@@ -683,6 +685,7 @@ input, textarea { font: inherit; color: inherit; }
 .modal-overlay--open { opacity: 1; pointer-events: all; }
 .modal {
   width: 100%; max-width: 780px; max-height: 85vh;
+  margin: 0 16px;
   border-radius: var(--radius); overflow: hidden;
   background: var(--charcoal); border: 1px solid rgba(0,212,255,0.15);
   box-shadow: 0 24px 80px rgba(0,0,0,0.5);
@@ -778,13 +781,22 @@ input, textarea { font: inherit; color: inherit; }
 @media (max-width: 768px) {
   :root { --px: 16px; }
   .sec { padding: 64px 0; }
-  .navbar { top: 8px; }
+  .navbar { top: 8px; max-width: calc(100% - 32px); }
   .navbar__links { display: none; }
   .navbar__mobile-toggle { display: flex; }
+  .navbar__mobile-menu { z-index: 10000; }
   .hero__name { font-size: 2.5rem; }
   .hero__stats { gap: 20px; }
   .hero__ctas { flex-direction: column; }
   .hero__ctas .btn { width: 100%; justify-content: center; }
+  .terminal { display: none; } /* Hide terminal on mobile to save space and fix overflow */
+  .hero .wrap { grid-template-columns: 1fr; gap: 32px; }
+  
+  /* Fix paddings to prevent cards bleeding out */
+  .pcard, .proj__content, .exp-card, .scat, .edu-main, .ach-card, .contact__form, .proj__side, .modal__body, .modal__header {
+    padding: 20px;
+  }
+  
   .skills__grid { grid-template-columns: 1fr; }
   .exp__metrics { grid-template-columns: 1fr; }
   .form-group--row { flex-direction: column; }
