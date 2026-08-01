@@ -51,7 +51,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         sender: {
           name: 'Portfolio Contact Form',
-          email: 'kapishtickoo.dev@gmail.com' // MUST be your verified Brevo sender email
+          email: 'ajjukigf@gmail.com' // MUST be your verified Brevo sender email
         },
         replyTo: {
           name: name.trim(),
