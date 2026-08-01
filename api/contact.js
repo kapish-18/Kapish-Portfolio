@@ -50,13 +50,12 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         sender: {
-          name: name.trim(),
-          email: email.trim() // Brevo allows sender to be the form filler if your domain is authenticated, or you can use your own authenticated email.
-          // Note: To avoid spam filters, it is safer to use your own email as sender and the user's email as replyTo.
+          name: 'Portfolio Contact Form',
+          email: 'kapishtickoo.dev@gmail.com' // MUST be your verified Brevo sender email
         },
         replyTo: {
           name: name.trim(),
-          email: email.trim()
+          email: email.trim() // The person who filled out the form
         },
         to: [{
           email: 'kapishtickoo.dev@gmail.com', // Your email where you want to receive messages
