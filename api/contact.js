@@ -2,7 +2,7 @@
 // Deployed automatically at /api/contact
 // Stores messages in-memory per invocation (use a DB for persistence)
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   // CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -39,8 +39,59 @@ export default function handler(req, res) {
 
   console.log('📩 New contact message:', entry);
 
-  return res.status(200).json({
-    success: true,
-    message: "Thanks for reaching out! I'll get back to you soon.",
-  });
+  try {
+    // Send email using Brevo API
+    const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'api-key': process.env.BREVO_API_KEY
+      },
+      body: JSON.stringify({
+        sender: {
+          name: name.trim(),
+          email: email.trim() // Brevo allows sender to be the form filler if your domain is authenticated, or you can use your own authenticated email.
+          // Note: To avoid spam filters, it is safer to use your own email as sender and the user's email as replyTo.
+        },
+        replyTo: {
+          name: name.trim(),
+          email: email.trim()
+        },
+        to: [{
+          email: 'kapishtickoo.dev@gmail.com', // Your email where you want to receive messages
+          name: 'Kapish Tickoo'
+        }],
+        subject: `New Portfolio Message from ${name.trim()}${company ? ` (${company.trim()})` : ''}`,
+        htmlContent: `
+          <html>
+            <body>
+              <h2>New Contact Message from Portfolio</h2>
+              <p><strong>Name:</strong> ${name.trim()}</p>
+              <p><strong>Email:</strong> ${email.trim()}</p>
+              <p><strong>Company:</strong> ${company?.trim() || 'N/A'}</p>
+              <br/>
+              <p><strong>Message:</strong></p>
+              <p>${message.trim().replace(/\n/g, '<br/>')}</p>
+            </body>
+          </html>
+        `
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error('Brevo API Error:', data);
+      return res.status(500).json({ error: 'Failed to send message. Please try again later.' });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Thanks for reaching out! I'll get back to you soon.",
+    });
+  } catch (error) {
+    console.error('Error sending email:', error);
+    return res.status(500).json({ error: 'Failed to send message due to a server error.' });
+  }
 }
