@@ -18,9 +18,9 @@ export const personalInfo = {
 };
 
 export const heroStats = [
-  { value: '4', label: 'Production Apps' },
-  { value: '4K+', label: 'Records Processed' },
-  { value: '84', label: 'Exercises Engineered' },
+  { value: '4', label: 'Major Projects' },
+  { value: '15+', label: 'Technologies' },
+  { value: '100%', label: 'Problem Driven' },
 ];
 
 // ═══════════════════════════════════════════
