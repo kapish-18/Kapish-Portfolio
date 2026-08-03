@@ -18,7 +18,7 @@ export const personalInfo = {
 };
 
 export const heroStats = [
-  { value: '4', label: 'Major Projects' },
+  { value: '2+', label: 'Major Projects' },
   { value: '15+', label: 'Technologies' },
   { value: '100%', label: 'Problem Driven' },
 ];
